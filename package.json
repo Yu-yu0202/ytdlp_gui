@@ -1,0 +1,31 @@
+{
+  "name": "yt-dlp-gui",
+  "version": "1.0.0",
+  "description": "",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "Yu-yu0202"
+  },
+  "type": "commonjs",
+  "main": "./lib/index.js",
+  "scripts": {
+    "test": "exit",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json src/**/*.ts",
+    "prepublish": "npm run build"
+  },
+  "dependencies": {
+    "electron": "^36.4.0",
+    "tslint": "^5.20.1"
+  },
+  "files": [
+    "./bin/*",
+    "./lib/*"
+  ],
+  "typings": "./lib/index.d.ts",
+  "devDependencies": {
+    "@types/node": "^24.0.1",
+    "@types/typescript": "^0.4.29",
+    "typescript": "^5.8.3"
+  }
+}

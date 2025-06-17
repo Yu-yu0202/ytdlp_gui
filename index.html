@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>yt-dlp GUI</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <h2>yt-dlp GUI</h2>
+        <div id="message-area" style="display: none;"></div>
+        <input type="url" id="vurl" placeholder="URL"/>
+        <input type="text" id="filename" placeholder="ファイル名"/>
+        <select id="format">
+            <option value="audio:mp3:320">MP3 320kbps</option>
+            <option value="audio:mp3:128">MP3 128kbps</option>
+            <option value="audio:auto:best">音声のみ:最高品質</option>
+            <option value="video:mp4:1080">MP4 1080p</option>
+            <option value="video:mp4:720">MP4 720p</option>
+            <option value="video:auto:best">動画:最高品質</option>
+        </select>
+        <button id="download">ダウンロード</button>
+        <textarea disabled id="stdout" placeholder="標準出力"></textarea>
+        <textarea disabled id="stderr" placeholder="標準エラー出力"></textarea>
+        <footer>
+            <span>yt-dlp Version: <span id="ytdlp_version">Obtaining...</span> </span>
+        </footer>
+        <script src="./lib/render.js"></script>
+    </body>
+</html>
