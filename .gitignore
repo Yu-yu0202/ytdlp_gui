@@ -2,3 +2,4 @@ node_modules/
 dist/
 lib/
 *.mp3
+release/
