@@ -1,7 +1,7 @@
 {
   "name": "yt-dlp-gui",
   "version": "1.0.0",
-  "description": "",
+  "description": "A simple GUI for yt-dlp",
   "license": "BSD-3-Clause",
   "author": {
     "name": "Yu-yu0202"
@@ -15,10 +15,7 @@
     "prepublish": "npm run build",
     "dist": "electron-builder"
   },
-  "dependencies": {
-    "electron": "^36.4.0",
-    "tslint": "^5.20.1"
-  },
+  "dependencies": {},
   "files": [
     "./bin/*",
     "./lib/*",
@@ -30,6 +27,7 @@
     "@types/node": "^24.0.1",
     "@types/typescript": "^0.4.29",
     "typescript": "^5.8.3",
+    "electron": "^36.4.0",
     "electron-builder": "^24.13.3"
   },
   "build": {
