@@ -54,6 +54,10 @@
       "maintainer": "Yu-yu0202 <135312165+Yu-yu0202@users.noreply.github.com>",
       "description": "A simple GUI for yt-dlp"
     },
-    "publish": "always"
+    "publish": [
+      {
+        "provider": "github"
+      }
+    ]
   }
 }
