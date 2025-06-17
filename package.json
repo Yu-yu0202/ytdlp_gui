@@ -12,7 +12,8 @@
     "test": "exit",
     "build": "tsc",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "dist": "electron-builder"
   },
   "dependencies": {
     "electron": "^36.4.0",
@@ -20,12 +21,37 @@
   },
   "files": [
     "./bin/*",
-    "./lib/*"
+    "./lib/*",
+    "./index.html",
+    "./style.css"
   ],
   "typings": "./lib/index.d.ts",
   "devDependencies": {
     "@types/node": "^24.0.1",
     "@types/typescript": "^0.4.29",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.ytdlpgui.app",
+    "productName": "yt-dlp GUI",
+    "files": [
+      "lib/**/*",
+      "index.html",
+      "style.css",
+      "package.json"
+    ],
+    "directories": {
+      "output": "release"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "mac": {
+      "target": "dmg"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   }
 }
