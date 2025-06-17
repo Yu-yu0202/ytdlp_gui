@@ -3,12 +3,12 @@ name: Release
 on: 
   push:
     tags:
-      - 'v*' # 例: v1.0.0, v1.0.1など
+      - 'v*'
 
 jobs:
   build:
     permissions:
-      contents: write # リリースを作成するための権限
+      contents: write
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
