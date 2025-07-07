@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow } from 'electron';
 import * as path from 'path';
 
 function CreateWindow() {
@@ -6,7 +6,7 @@ function CreateWindow() {
     width: 800,
     height: 600,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.resolve(__dirname, 'preload.js'),
       contextIsolation: true,
       nodeIntegration: true
     },
@@ -25,12 +25,4 @@ app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     CreateWindow();
   }
-});
-
-ipcMain.on('ytdlp-stdout-renderer', (_event, data) => {
-  BrowserWindow.getAllWindows()[0].webContents.send('ytdlp-stdout-renderer', data);
-});
-
-ipcMain.on('ytdlp-stderr-renderer', (_event, data) => {
-  BrowserWindow.getAllWindows()[0].webContents.send('ytdlp-stderr-renderer', data);
 });
