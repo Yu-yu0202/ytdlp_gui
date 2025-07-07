@@ -9,13 +9,15 @@
   "type": "commonjs",
   "main": "./lib/index.js",
   "scripts": {
-    "test": "exit",
-    "build": "tsc",
+    "prebuild": "node -e \"const fs=require('fs'); if(!fs.existsSync('./lib')){fs.mkdirSync('./lib',{recursive:true})}\"",
+    "build": "pnpm run prebuild && tsc",
     "lint": "tslint -c tslint.json src/**/*.ts",
-    "prepublish": "npm run build",
-    "dist": "electron-builder"
+    "prepublish": "pnpm run build",
+    "dist": "electron-builder",
+    "dev": "pnpm build && pnpm dist && \".\\release\\win-unpacked\\yt-dlp GUI.exe\""
   },
-  "dependencies": {},
+  "dependencies": {
+  },
   "files": [
     "./bin/*",
     "./lib/*",
@@ -26,33 +28,30 @@
   "devDependencies": {
     "@types/node": "^24.0.1",
     "@types/typescript": "^0.4.29",
-    "typescript": "^5.8.3",
     "electron": "^36.4.0",
-    "electron-builder": "^24.13.3"
+    "electron-builder": "^24.13.3",
+    "typescript": "^5.8.3"
   },
   "build": {
     "appId": "com.ytdlpgui.app",
     "productName": "yt-dlp GUI",
     "files": [
       "lib/**/*",
+      "node_modules/**/*",
       "index.html",
       "style.css",
       "package.json"
     ],
     "directories": {
-      "output": "release"
+      "output": "release",
+      "buildResources": "build"
     },
+    "asar": true,
+    "asarUnpack": [
+      "lib/**/*"
+    ],
     "win": {
       "target": "portable"
-    },
-    "mac": {
-      "target": "dmg"
-    },
-    "linux": {
-      "target": ["deb","AppImage"],
-      "category": "Utility",
-      "maintainer": "Yu-yu0202 <135312165+Yu-yu0202@users.noreply.github.com>",
-      "description": "A simple GUI for yt-dlp"
     },
     "publish": [
       {
