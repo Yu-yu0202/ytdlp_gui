@@ -12,12 +12,11 @@
         <input type="url" id="vurl" placeholder="URL"/>
         <input type="text" id="filename" placeholder="ファイル名"/>
         <select id="format">
-            <option value="audio:mp3:320">MP3 320kbps</option>
-            <option value="audio:mp3:128">MP3 128kbps</option>
-            <option value="audio:auto:best">音声のみ:最高品質</option>
-            <option value="video:mp4:1080">MP4 1080p</option>
-            <option value="video:mp4:720">MP4 720p</option>
-            <option value="video:auto:best">動画:最高品質</option>
+            <option value="bestaudio[ext=mp4]">MP3</option>
+            <option value="bestaudio[ext=webm]">opus</option>
+            <option value="bestaudio[ext=m4a]">m4a</option>
+            <option value="bestaudio[ext=flac]">FLAC</option>
+            <option value="bestmovie[ext=mp4]">MP4</option>
         </select>
         <button id="download">ダウンロード</button>
         <textarea disabled id="stdout" placeholder="標準出力"></textarea>
