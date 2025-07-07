@@ -7,33 +7,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     } else {
         console.warn("[debug]: ytdlp_version_span not found");
     }
-    window.ytdlp.onStdout((line: string) => {
-        console.info("[debug]: Stdout:", line);
-        if (stdOut) {
-            stdOut.textContent += line + "\n";
-        } else {
-            console.warn("[debug]: stdOut element not found");
-        }
-    });
-    window.ytdlp.onStderr((line: string) => {
-        console.error("[debug]: Stderr:", line);
-        if (stdErr) {
-            stdErr.textContent += line + "\n";
-        } else {
-            console.warn("[debug]: stdErr element not found");
-        }
-    });
 });
 
 const downloadButton: HTMLElement | null = document.getElementById('download');
 const stdOut: HTMLElement | null = document.getElementById('stdout');
-const stdErr: HTMLElement | null = document.getElementById('stderr');
+const stderr: HTMLElement | null = document.getElementById('stderr');
 const messageArea: HTMLElement | null = document.getElementById('message-area');
 
 function showMessage(message: string, type: 'success' | 'failure') {
     if (messageArea) {
         messageArea.textContent = message;
-        messageArea.className = ''; // Remove existing classes
+        messageArea.className = '';
         messageArea.classList.add(type === 'success' ? 'message-success' : 'message-failure');
         messageArea.style.display = 'block';
         setTimeout(() => {
@@ -42,9 +26,19 @@ function showMessage(message: string, type: 'success' | 'failure') {
                 messageArea.textContent = '';
                 messageArea.className = '';
             }
-        }, 5000); // 5秒後にメッセージを非表示にする
+        }, 5000);
     }
 }
+
+window.ytdlp.onStdout((data: string) => {
+    if (stdOut) {
+        if (stdOut instanceof HTMLTextAreaElement) {
+            stdOut.value += data;
+        } else if (stdOut.textContent !== undefined) {
+            stdOut.textContent += data;
+        }
+    }
+});
 
 downloadButton?.addEventListener('click', async (event: MouseEvent) => {
     console.info("[debug]: Download button clicked");
@@ -52,14 +46,31 @@ downloadButton?.addEventListener('click', async (event: MouseEvent) => {
     const url: string | null = (document.getElementById('vurl') as HTMLInputElement).value;
     const outputPath: string | null = (document.getElementById('filename') as HTMLInputElement).value;
     const formatType: string = (document.getElementById('format') as HTMLSelectElement).value;
-    if (!url || !outputPath || !formatType) {
+    if (!url || !formatType) {
         console.error("[debug]: Missing input values");
         alert("Please fill in all fields.");
         return;
     }
     try {
-        const result: string = await window.ytdlp.download(url, outputPath, formatType);
-        console.info("[debug]: Download successful", result);
+        if (!stdOut || !stderr) {
+            console.error("[debug]: stdOut or stderr not found");
+            throw new Error("stdOut or stderr not found");
+        }
+        if (stdOut instanceof HTMLTextAreaElement) {
+            stdOut.value = '';
+        } else if (stdOut.textContent !== undefined) {
+            stdOut.textContent = '';
+        }
+        if (stderr instanceof HTMLTextAreaElement) {
+            stderr.value = '';
+        } else if (stderr.textContent !== undefined) {
+            stderr.textContent = '';
+        }
+        
+        const format = document.getElementById('format') as HTMLSelectElement | null;
+        const ext = format?.selectedOptions?.[0]?.text.toLowerCase() ?? '';
+
+        await window.ytdlp.download(url, outputPath, formatType, stdOut, stderr, ext);
         showMessage("ダウンロードが完了しました！", 'success');
     } catch (error: any) {
         console.error("[debug]: Download failed", error);
