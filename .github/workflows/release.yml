@@ -10,10 +10,8 @@ jobs:
   build:
     permissions:
       contents: write
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+      
+    runs-on: windows-latest
 
     steps:
     - name: Checkout code
@@ -24,10 +22,15 @@ jobs:
       with:
         node-version: '22.14.0'
 
+    - name: Setup pnpm
+      uses: pnpm/action-setup@v2
+      with:
+        version: 8
+
     - name: Install dependencies
-      run: npm i
+      run: pnpm install --frozen-lockfile
 
     - name: Build and release Electron app
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: npx electron-builder --publish always
+      run: pnpm exec electron-builder --publish always
