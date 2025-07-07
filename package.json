@@ -1,6 +1,6 @@
 {
   "name": "yt-dlp-gui",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple GUI for yt-dlp",
   "license": "BSD-3-Clause",
   "author": {
